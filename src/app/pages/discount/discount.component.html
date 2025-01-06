@@ -1,0 +1,173 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <h6 class="heading-small text-muted mb-4">Listado de descuentos</h6>
+          <hr>
+          <div class="row">
+            <div class="col-12 text-right">
+              <button class="btn btn-md btn-success btn-round btn-icon" (click)="open(newDiscount)">
+                <span class="btn-inner--icon">
+                  +
+                </span>
+                <span class="btn-inner--text"> Nuevo descuento</span>
+              </button>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="table-responsive">
+              <table id="discount"
+                class="table align-items-center table-flush row-border hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th width="10%">#</th>
+                    <th width="40%">Nombre</th>
+                    <th width="10%">Tipo</th>
+                    <th width="10%">Descuento</th>
+                    <th width="10%">Estado</th>
+                    <th width="10%">
+                      acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr *ngFor="let discount of iDiscounts; index as i">
+                    <th width="10%">{{ i + 1}}</th>
+                    <th width="40%">{{ discount.name }}</th>
+                    <th width="10%">{{ (discount.typeCharger == 1) ? 'PORCENTAJE' : 'FIJO' }}</th>
+                    <th width="10%">{{ (discount.typeCharger == 1) ? discount.porcentage + ' %' : discount.porcentage | currency: 'USD'    }}</th>
+                    <th width="10%"> <span
+                        class="{{(discount.state == 1) ? 'badge badge-success' : 'badge badge-danger'}}">{{(discount.state == 1) ? 'ACTIVO' : 'INACTIVO'}}</span>
+                    </th>
+                    <th width="10%" colspan="2">
+                      <button class="btn btn-success btn-sm"
+                        (click)="open(updateDiscounts); getDiscountUpdate(discount.code)">Actualizar</button>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #newDiscount let-c="close" let-d="dismiss">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title-default">Agregar nuevo descuento</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="createDiscount" (ngSubmit)="postDiscount($event)">
+        <div class="row">
+          <!-- Name discount -->
+          <div class="col-md-6 form-group">
+            <label>Nombre</label>
+            <input type="text" class="form-control" formControlName="name" />
+          </div>
+
+          <!-- Type of discount of payment -->
+          <div class="col-md-6 form-group">
+            <label>Tipo de descuento</label>
+            <select class="form-control" formControlName="typeCharger">
+              <option value="">SELECCIONAR</option>
+              <option value="1">VARIABLE (porcentaje)</option>
+              <option value="2">FIJO</option>
+            </select>
+          </div>
+
+          <!-- porcentage discount  -->
+          <div class="col-md-6 form-group">
+            <label>Porcentaje o monto de descuento</label>
+            <input type="number" class="form-control" formControlName="porcentage" />
+          </div>
+
+          <div class="col-12 alert alert-warning" *ngIf="createDiscount.value.typeCharger !== '' && createDiscount.value.typeCharger !== null">
+            <label *ngIf="createDiscount.value.typeCharger == 2">Debe de ingresar el monto en dolares</label>
+            <label *ngIf="createDiscount.value.typeCharger == 1">debe de ingresar un porcentaje...</label>
+          </div>
+
+        </div>
+        <button type="submit" class="btn btn-info">
+          Guardar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="getDismissReason('Close click')">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #updateDiscounts let-c="close" let-d="dismiss">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title-default">Actualizar descuento</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="updateDiscount" (ngSubmit)="putDiscount($event)">
+        <div class="row">
+          <!-- Name discount -->
+          <div class="col-md-6 form-group">
+            <label>Nombre</label>
+            <input type="text" class="form-control" formControlName="name" />
+          </div>
+          <!-- Type of discount of payment -->
+          <div class="col-md-6 form-group">
+            <label>Tipo de descuento</label>
+            <select class="form-control" formControlName="typeCharger">
+              <option value="">SELECCIONAR</option>
+              <option value="1">VARIABLE (porcentaje)</option>
+              <option value="2">FIJO</option>
+            </select>
+          </div>
+
+          <!-- porcentage discount  -->
+          <div class="col-md-6 form-group">
+            <label>Porcentaje o monto de descuento</label>
+            <input type="number" class="form-control" formControlName="porcentage" />
+          </div>
+
+          <!-- state discount -->
+          <div class="col-md-6 form-group">
+            <label>Estado</label>
+            <select class="form-control" formControlName="state">
+              <option value="1">ACTIVO</option>
+              <option value="2">INACTIVO</option>
+            </select>
+          </div>
+
+          <div class="col-12 alert alert-warning" *ngIf="updateDiscount.value.typeCharger !== '' && updateDiscount.value.typeCharger !== null">
+            <label *ngIf="updateDiscount.value.typeCharger == 2">Debe de ingresar el monto en dolares</label>
+            <label *ngIf="updateDiscount.value.typeCharger == 1">Debe de ingresar un porcentaje...</label>
+          </div>
+
+        </div>
+        <button type="submit" class="btn btn-info">
+          Guardar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="getDismissReason('Close click')">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+</ng-template>

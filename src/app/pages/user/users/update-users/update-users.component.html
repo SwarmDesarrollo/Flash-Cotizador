@@ -1,0 +1,77 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <form [formGroup]="fUser" (ngSubmit)="updateUsers($event)">
+            <h6 class="heading-small text-muted mb-4">Modificar usuario</h6>
+            <hr>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="">Nombre completo</label>
+                <input type="text" class="form-control" formControlName="name">
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="">Dirección</label>
+                <input type="text" class="form-control" formControlName="direction">
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="">Numero telefonico</label>
+                <input type="number" class="form-control" formControlName="phone">
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="">Correo electronico</label>
+                <input type="email" placeholder="example@example.com" class="form-control" formControlName="email">
+              </div>
+
+
+              <div class="col-md-6 form-group">
+                <label for="">Nombre de usuario</label>
+                <input type="text" class="form-control" formControlName="username">
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="">Contraseña</label>
+                <input type="password" placeholder="temporal123" class="form-control" formControlName="password">
+              </div>
+
+
+              <div class="col-md-6 form-group">
+                <label for="">Tipo de usuario</label>
+                <select class="form-control" formControlName="codeTypeUser">
+                  <option value="">SELECCIONAR</option>
+                  <option *ngFor="let typeUser of typeUsers" value="{{typeUser.code}}">{{ typeUser.name }}</option>
+                </select>
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="">Estado</label>
+                <select class="form-control" formControlName="state">
+                  <option value="">SELECCIONAR</option>
+                  <option value="1">ACTIVO</option>
+                  <option value="2">INACTIVO</option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                <button class="btn btn-success" type="submit">Guardar</button>
+                <button class="btn btn-danger" (click)="thisBack()" >Cancelar</button>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

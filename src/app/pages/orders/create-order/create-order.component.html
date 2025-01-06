@@ -1,0 +1,101 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-warning opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <h6 class="heading-small text-muted mb-4">Nuevo Pedido</h6>
+
+          <form [formGroup]="createOrder" (ngSubmit)="createNewOrder($event)">
+
+            <div class="row">
+
+              <div class="col-md-8 form-group">
+                <label>* Nombre Cliente</label>
+                <input type="text" class="form-control is-valid" readonly formControlName="nameClient" />
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label class="form-control-label">Tipo de cliente</label>
+                <input type="text" class="form-control is-valid" readonly formControlName="nombreTipoCliente" />
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label class="form-control-label">Empresa</label>
+                <input type="text" class="form-control is-valid" readonly formControlName="nombreEmpresa" />
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label>* Costo Total (Q)</label>
+                <input type="number" class="form-control is-valid" readonly formControlName="cost" />
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label>* Monto Total (Q)</label>
+                <input type="number" class="form-control is-valid" readonly formControlName="montoTotal" />
+              </div>
+
+              <div class="col-md-3 form-group" *ngIf="currentQuotationForBuy?.tipo_cliente == 1" (change)="changeTypePay($event)">
+                <label for="">* Forma de Pago</label>
+                <select class="form-control is-valid" formControlName="orderPay">
+                  <option value="">SELECCIONAR</option>
+                  <option value="1">PAGAR COMPLETO</option>
+                  <option value="2">A CUOTAS</option>
+                </select>
+              </div>
+
+              <div class="col-md-3 form-group" *ngIf="!typePay">
+                <label>No Cuotas</label>
+                <input type="number" class="form-control is-valid" formControlName="noCuotas" />
+              </div>
+
+              <div class="col-md-3 form-group" *ngIf="typePay">
+                <label>Primer Pago (Q) 50%</label>
+                <input type="number" class="form-control is-valid" formControlName="firstPay" />
+              </div>
+
+              <div class="col-md-6 form-group" *ngIf="typePay">
+                <label>Voucher Primer Pago 50% (PDF)</label>
+                <file-upload formControlName="pathFirstPay" 
+                [accept]="'application/pdf'" 
+                [multiple]="multiple" [animation]="animation" (drop)="onUploadChange($event)" (change)="onUploadChange($event)"></file-upload>
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label>* Voucher Compra en Línea (PDF)</label>
+                <file-upload formControlName="pathPayOnline" 
+                [accept]="'application/pdf'" 
+                [multiple]="multiple" [animation]="animation" (drop)="onUploadChangePayOnline($event)" (change)="onUploadChangePayOnline($event)"></file-upload>
+              </div>
+
+              <div class="col-md-6 form-group" *ngIf="currentQuotationForBuy?.tipo_cliente == 1">
+                <label>Carta de Compromiso (PDF)</label>
+                <file-upload formControlName="letter" 
+                [accept]="'application/pdf'" 
+                [multiple]="multiple" [animation]="animation" (drop)="onUploadChangeLetter($event)" (change)="onUploadChangeLetter($event)"></file-upload>
+              </div>
+
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-info pull-right">
+                  Guardar
+                </button>
+                <button type="button" class="btn btn-danger pull-right" (click)="backClicked()">
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

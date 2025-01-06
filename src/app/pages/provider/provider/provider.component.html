@@ -1,0 +1,71 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <div class="row">
+            <h6 class="heading-small text-muted mb-4">Listado de proveedores</h6>
+            <div class="col-12 text-right">
+              <a class="btn btn-md btn-success btn-round btn-icon" [routerLink]="['/new-provider']">
+                <span class="btn-inner--icon">
+                  <i class="fas fa-user-edit"> </i>
+                </span>
+                <span class="btn-inner--text"> Nuevo proveedor </span>
+              </a>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th width="1%">#</th>
+                    <th width="10%">Nombre</th>
+                    <th width="10%">Costo por libra</th>
+                    <th width="10%">Seguro</th>
+                    <th width="10%">Desaduanaje</th>
+                    <th width="10%">Shipping</th>
+                    <th width="20%" colspan="2">
+                      acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr *ngFor="let provider of providerI;index as i">
+                    <td width="1%">{{i + 1}}</td>
+                    <td width="10%">{{provider.name}}</td>
+                    <td width="10%">{{provider.priceWeight}}</td>
+                    <td width="10%">{{provider.safe}}</td>
+                    <td width="10%">{{provider.customClearence}}</td>
+                    <td width="10%">{{provider.shipping}}</td>
+                    <td width="5%">
+                      <a [routerLink]="['/edit-provider', provider.code]"
+                        class="btn btn-sm btn-success btn-icon btn-round">
+                        <i class="fa fa-edit"></i>
+                        Editar</a>
+                    </td>
+                    <td width="5%">
+                      <button (click)="clickMethod('name', provider.code)"
+                        class="btn btn-sm btn-danger btn-round btn-icon">
+                        <i class="fa fa-trash"></i>
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

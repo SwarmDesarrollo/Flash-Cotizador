@@ -4,35 +4,25 @@ import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { LoginComponent } from "./login/login.component";
+import { GuardGuard } from "./guard/guard.guard";
 
 const routes: Routes =[
+  { path: "", component: LoginComponent, pathMatch: "full" },
+  { path: "dashboard", redirectTo: "dashboard", pathMatch: "full" },
   {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-  }, {
     path: '',
     component: AdminLayoutComponent,
     children: [
       {
         path: '',
-        loadChildren: () => import('src/app/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
+        loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule),
+        canActivateChild: [GuardGuard]
       }
-    ]
-  }, {
-    path: '',
-    component: AuthLayoutComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('src/app/layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule)
-      }
-    ]
-  }, {
-    path: '**',
-    redirectTo: 'dashboard'
-  }
+    ],
+    canActivate: [GuardGuard],
+    canLoad: [GuardGuard]
+  },
 ];
 
 @NgModule({
@@ -43,7 +33,6 @@ const routes: Routes =[
       useHash: true
     })
   ],
-  exports: [
-  ],
+  exports: [],
 })
 export class AppRoutingModule { }

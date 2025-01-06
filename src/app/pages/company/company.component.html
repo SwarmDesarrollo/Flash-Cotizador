@@ -1,0 +1,128 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-warning opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <h6 class="heading-small text-muted mb-4">Listado de empresas</h6>
+          <hr>
+          <div class="row">
+            <div class="col-12 text-right">
+              <button class="btn btn-md btn-success btn-round btn-icon" (click)="open(newCompany)">
+                <span class="btn-inner--icon">
+                  +
+                </span>
+                <span class="btn-inner--text"> Nueva Empresa</span>
+              </button>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="table-responsive">
+              <table id="company"
+                class="table align-items-center table-flush row-border hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th width="10%">#</th>
+                    <th width="40%">Nombre</th>
+                    <th width="10%">Estado</th>
+                    <th width="10%">
+                      acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr *ngFor="let item of iCompanies; index as i">
+                    <th width="10%">{{ item.code }}</th>
+                    <th width="40%">{{ item.name }}</th>
+                    <th width="10%"> <span
+                        class="{{(item.state == 1) ? 'badge badge-success' : 'badge badge-danger'}}">{{(item.state == 1) ? 'ACTIVO' : 'INACTIVO'}}</span>
+                    </th>
+                    <th width="10%" colspan="2">
+                      <button class="btn btn-success btn-sm"
+                        (click)="open(updateCompanyTemplate); getCompanyUpdate(item.code)">Actualizar</button>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #newCompany let-c="close" let-d="dismiss">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title-default">Agregar nueva empresa</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="createCompany" (ngSubmit)="postCompany($event)">
+        <div class="row">
+          <!-- Name company -->
+          <div class="col-md-12 form-group">
+            <label>Nombre</label>
+            <input type="text" class="form-control" formControlName="name" />
+          </div>
+
+        </div>
+        <button type="submit" class="btn btn-info">
+          Guardar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="getDismissReason('Close click')">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #updateCompanyTemplate let-c="close" let-d="dismiss">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title-default">Actualizar descuento</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="updateCompany" (ngSubmit)="putCompany($event)">
+        <div class="row">
+          <!-- Name company -->
+          <div class="col-md-12 form-group">
+            <label>Nombre</label>
+            <input type="text" class="form-control" formControlName="name" />
+          </div>
+          
+          <!-- state discount -->
+          <div class="col-md-12 form-group">
+            <label>Estado</label>
+            <select class="form-control" formControlName="state">
+              <option value="1">ACTIVO</option>
+              <option value="2">INACTIVO</option>
+            </select>
+          </div>
+
+        </div>
+        <button type="submit" class="btn btn-info">
+          Guardar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="getDismissReason('Close click')">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+</ng-template>

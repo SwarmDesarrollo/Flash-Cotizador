@@ -1,0 +1,232 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+
+
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <h6 class="heading-small text-muted mb-4">Listado de tipos de usuarios</h6>
+          <hr>
+          <div class="row">
+            <div class="col-12 text-right">
+              <button class="btn btn-md btn-success btn-round btn-icon" (click)="open(newTypeUser)">
+                <span class="btn-inner--icon">
+                  <i class="fas fa-user-edit"> </i>
+                </span>
+                <span class="btn-inner--text"> Nuevo tipo de usuario</span>
+              </button>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th width="10%">#</th>
+                    <th width="70%">Nombre</th>
+                    <th width="70%">Estado</th>
+                    <th width="20%" colspan="2"> acciones </th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr *ngFor="let typeUser of typeUser; index as i ">
+                    <th width="10%">{{ i + 1}}</th>
+                    <th width="70%">{{ typeUser.name | uppercase}}</th>
+                    <th width="70%"> <span
+                        class="{{ (typeUser.state == 1) ? 'badge badge-success': 'badge badge-danger'}} ">{{ (typeUser.state == 1) ? 'ACTIVO': 'INACTIVO'}}</span>
+                    </th>
+                    <th width="20%" colspan="2">
+                      <button class="btn btn-success btn-sm"
+                        (click)="open(updateTypeUsers); getTypeUser(i)">Actualizar</button>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <h6 class="heading-small text-muted mb-4">Listado de accesos por tipo de usuario</h6>
+      <hr>
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <label>Tipo de usuario</label>
+              <select name="" id="" class="form-control" [(ngModel)]="codeTypeUserSearch"
+                (change)="getAllAccess(codeTypeUserSearch)">
+                <option value="">SELECCIONAR</option>
+                <option *ngFor="let typeUser of typeUserActive;" value="{{typeUser.code}}">
+                  {{ typeUser.name | uppercase }}
+                </option>
+              </select>
+            </div>
+            <div class="col-6 text-right">
+              <button class="btn btn-md btn-success btn-round btn-icon" (click)="open(newAccessMenu); getAllAcess()">
+                <span class="btn-inner--icon">
+                  <i class="fas fa-user-edit"> </i>
+                </span>
+                <span class="btn-inner--text"> Nuevo acceso</span>
+              </button>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th width="10%">#</th>
+                    <th width="70%">Nombre</th>
+                    <th width="10%">Estado</th>
+                    <th width="10%"></th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr *ngFor="let access of iAccess; index as i ">
+                    <td width="10%">{{ i + 1}}</td>
+                    <td width="70%">{{ access.access.title }}</td>
+                    <td width="10%">
+                      <span
+                        class="{{(access.state === 1) ? 'badge badge-success' : 'badge badge-danger'}}">{{(access.state === 1) ? 'Activo' : 'Inactivo'}}</span>
+                    </td>
+                    <td colspan="2">
+                      <label class="custom-toggle"
+                        (change)="updateMenu(access.code, access.state, access.codeTypeUser)">
+                        <input type="checkbox" checked *ngIf="access.state == 1">
+                        <input type="checkbox" *ngIf="access.state == 2">
+                        <span class="custom-toggle-slider rounded-circle"></span>
+                      </label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+
+<ng-template #newTypeUser let-c="close" let-d="dismiss">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title-default">Agregar nuevo tipo de usuario</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="fTuserCreate" (ngSubmit)="createTypeUser($event)">
+        <div class="row">
+          <!-- Name discount -->
+          <div class="col-md-12 form-group">
+            <label>Nombre</label>
+            <input type="text" class="form-control" formControlName="name" />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-info">
+          Guardar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="getDismissReason('Close click')">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #updateTypeUsers let-c="close" let-d="dismiss">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title-default">Actualizar tipo de usuario</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="fTuserUpdate" (ngSubmit)="updateTypeUser($event)">
+        <div class="row">
+          <!-- Name type user -->
+          <div class="col-md-6 form-group">
+            <label>Nombre de categoria</label>
+            <input type="text" class="form-control" formControlName="name" />
+          </div>
+          <!-- state tyupe user -->
+          <div class="col-md-6 form-group">
+            <label>Estado</label>
+            <select class="form-control" formControlName="state">
+              <option value="1">ACTIVO</option>
+              <option value="2">INACTIVO</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-info">
+          Guardar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="getDismissReason('Close click')">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #newAccessMenu let-c="close" let-d="dismiss">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title-default">Nuevo acceso</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="fNewAccess" (ngSubmit)="createNewAccess($event)">
+        <div class="row">
+          <!-- Name type user -->
+          <div class="col-md-6 form-group">
+            <label>Tipo de usuario</label>
+            <select class="form-control" formControlName="codeTypeUser">
+              <option value="">SELECCIONAR</option>
+              <option *ngFor="let typeUser of typeUserActive" value="{{typeUser.code}}">{{ typeUser.name | uppercase}}
+              </option>
+            </select>
+          </div>
+          <!-- state tyupe user -->
+          <div class="col-md-6 form-group">
+            <label>Nombre del acceso</label>
+            <select class="form-control" formControlName="codeAccess">
+              <option value="">SELECCIONAR</option>
+              <option *ngFor="let access of listAccess" value="{{access.code}}">{{access.title | uppercase}}</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-info">
+          Guardar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="getDismissReason('Close click')">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+</ng-template>

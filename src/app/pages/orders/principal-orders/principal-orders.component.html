@@ -1,0 +1,163 @@
+<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+      <div class="row">
+        <div class="col-xl-3 col-lg-6">
+          <a [routerLink]="['/list-orders']" [queryParams]="{status: 1}">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Comprados</h5>
+                    <span class="h2 font-weight-bold mb-0">{{orderBuy}}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                      <i class="ni ni-basket"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <a [routerLink]="['/for-delivery']">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">En Bodega</h5>
+                    <span class="h2 font-weight-bold mb-0">{{orderStore}}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                      <i class="ni ni-box-2"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <a [routerLink]="['/delivered']">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Entregados</h5>
+                    <span class="h2 font-weight-bold mb-0">{{orderDelivered}}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                      <i class="ni ni-satisfied"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <a [routerLink]="['/delivered']">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Validados</h5>
+                    <span class="h2 font-weight-bold mb-0">{{orderValidated}}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-success text-white rounded-circle shadow">
+                      <i class="fas fa-check"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--7">
+  <div class="row mt-5">
+
+    <div class="col-xl-12 mb-12 mb-1">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">Cotizaciones Aceptadas - Últimos 10</h3>
+            </div>
+            <!-- <div class="col text-right">
+              <button [routerLink]="['/list-orders']" class="btn btn-sm btn-primary">Visualizar Cotizaciones</button>
+            </div> -->
+          </div>
+        </div>
+        <div class="table-responsive">
+          <!-- Projects table -->
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th width="5%">No.</th>
+                <th width="40%">Nombre Cliente</th>
+                <th width="5%">Monto</th>
+                <th width="5%">Vendedor</th>
+                <th width="5">Fecha de Creación</th>
+                <th width="5%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of quotations; index as i">
+                <td scope="col">{{ item.codeClient }}</td>
+                <td scope="col">{{ item.nameClient }}</td>
+                <td scope="col">{{ item.amountTotal }}</td>
+                <td scope="col">{{ item.user.username }}</td>
+                <td scope="col">{{ item.createdAt | date:'yyyy-M-d' }}</td>
+                <td scope="col">
+                  <button [routerLink]="['/create-order', item.codeClient]" class="btn btn-info btn-sm">
+                    Comprar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-4 mb-5 mb-xl-0">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">Empresas con compras en proceso</h3>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <!-- Projects table -->
+          <!-- <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Cantidad de ventas</th>
+                <th scope="col">Nombre</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor='let category of bestCategory'>
+                <td scope="col">{{category.count}}</td>
+                <td scope="col">{{category.name}}</td>
+              </tr>
+            </tbody>
+          </table> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

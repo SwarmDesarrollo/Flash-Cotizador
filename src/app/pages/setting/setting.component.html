@@ -1,0 +1,117 @@
+<ngx-spinner>
+  <p style="font-size: 20px; color: white "> Cargando ... </p>
+</ngx-spinner>
+
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <form [formGroup]="formSettings" (ngSubmit)="updateSettings($event)">
+            <h6 class="heading-small text-muted mb-4">Configuraciones</h6>
+            <hr>
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <label for="">% TAX</label>
+                <input type="number" class="form-control" formControlName="tax" />
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="">% IVA</label>
+                <input type="number" class="form-control" formControlName="iva" />
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="">Taza de cambio</label>
+                <input type="number" class="form-control" formControlName="priceChange" />
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">% Cobro de tarjeta</label>
+                <input type="number" class="form-control" formControlName="cardCost" />
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">% de ganancia</label>
+                <input type="number" class="form-control" formControlName="percentageProfit" />
+              </div>
+
+
+              <div class="col-md-4 form-group">
+                <label for="">Costo de envio ($) </label>
+                <input type="number" class="form-control" formControlName="shippingGt" />
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">Costo por libra CIF ($) </label>
+                <input type="number" class="form-control" formControlName="priceWeightCif" />
+              </div>
+              <div class="col-md-12">
+                <button class="btn btn-info" type="submit">Guardar</button>
+                <!-- <button class="btn btn-danger">Cancelar</button> -->
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card bg-secondary shadow">
+    <div class="card-body">
+      <h6 class="heading-small text-muted mb-4">Categoria</h6>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="">Seleccionar archivo (.csv) </label>
+            <input type="file" class="form-control" (change)="onUploadChange($event)">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <br>
+          <button class="btn btn-success" (click)="bulkLoad()">cargar</button>
+        </div>
+      </div>
+      <br>
+      <h6 class="heading-small text-muted mb-4">Subcategoria</h6>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="">Seleccionar archivo (.csv) </label>
+            <input type="file" class="form-control" (change)="onUploadChangeSubCategory($event)">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <br>
+          <button class="btn btn-success" (click)="bulkLoadSubcategory()">cargar</button>
+        </div>
+      </div>
+
+      <br>
+      <h6 class="heading-small text-muted mb-4">Aranceles</h6>
+      <hr class="my-4">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="">Seleccionar archivo (.csv) </label>
+            <input type="file" class="form-control" (change)="onUploadChangeTariff($event)">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <br>
+          <button class="btn btn-success" (click)="bulkLoadTariff()">cargar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

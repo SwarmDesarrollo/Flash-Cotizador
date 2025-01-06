@@ -1,0 +1,190 @@
+<ngx-spinner>
+  <p style="font-size: 20px; color: white "> Generando cotización ... </p>
+</ngx-spinner>
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <h6 class="heading-small text-muted mb-4">Información del cliente</h6>
+          <!-- button generate or exit -->
+          <div class="row align-items-center">
+            <div class="col-md-6 text-left">
+              <!-- assigment -->
+              <div class="form-group">
+                <label class="form-control-label" for="input-first-name">Asignar a administrador</label>
+                <select name="" id="" class="form-control" [(ngModel)]="codeAdminAssigment"
+                  (change)="assigmentToAdmin(codeAdminAssigment)" #adminCode>
+                  <option value="">SELECCIONAR</option>
+                  <option *ngFor="let ua of userAdmin" value="{{ua.code}}">
+                    {{ua.name | uppercase}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 text-right">
+              <!-- <button class="btn btn-success" (click)="generateHTMLPDF()">Generar pdf2</button> -->
+              <button class="btn btn-success" (click)="generatePDF()">Generar PDF</button>
+              <button class="btn btn-danger" (click)="backClicked()">salir</button>
+            </div>
+          </div>
+          <!-- button generate or exit -->
+          <!-- group form -->
+          <div class="pl-lg-4">
+            <!-- init form group -->
+            <form [formGroup]="updateClient" (ngSubmit)="updateDataclient($event)">
+              <!-- init row -->
+              <div class="row">
+                <!-- correlative -->
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Correlativo</label>
+                    <input type="text" id="input-username" formControlName="code" class="form-control is-valid"
+                      placeholder="0001" disabled />
+                  </div>
+                </div>
+                <!-- correlative flash -->
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Correlativo flash</label>
+                    <input type="text" formControlName="correlative" class="form-control is-valid"
+                      placeholder="C001-flash" />
+                  </div>
+                </div>
+                <!-- name -->
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Nombre</label>
+                    <input type="text" formControlName="name" class="form-control is-valid" placeholder="Full name" />
+                  </div>
+                </div>
+                <!-- Email -->
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Correo electronico</label>
+                    <input type="email" formControlName="email" class="form-control is-valid"
+                      placeholder="example@example.com" />
+                  </div>
+                </div>
+                <!-- phone -->
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">Telefono</label>
+                    <input type="text" id="input-first-name" formControlName="phone" class="form-control is-valid"
+                      placeholder="0000 0000" />
+                  </div>
+                </div>
+                <!-- button -->
+                <div class="col-md-12">
+                  <button type="submit" class="btn btn-success">Actualizar informacion</button>
+                </div>
+              </div>
+              <!-- end row -->
+            </form>
+            <!-- init form group -->
+          </div>
+          <!-- end group form -->
+
+          <!-- Description -->
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">Listado</h3>
+            </div>
+            <div class="col text-right">
+              <button (click)="open(addLinkQuotation)" class="btn btn-success">Agregar link</button>
+            </div>
+          </div>
+          <br>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th width="5%">#</th>
+                  <th width="60%">Link</th>
+                  <th width="60%">Comentario</th>
+                  <th colspan="2" width="10%">
+                    Enviar
+                  </th>
+                  <th width="10%">Estado</th>
+                  <th width="10%">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let links of iListQuotation; index as i ">
+                  <td width="5%">{{i + 1}}</td>
+                  <td width="60%"><a href="{{ links.link }}" target="_blank">Visualizar link</a></td>
+                  <td width="60%">{{links.commentary}}</td>
+                  <td colspan="2">
+                    <label class="custom-toggle" (change)="sendProductQuote($event, links.code, links.sendProduct)">
+                      <input type="checkbox" checked *ngIf="links.sendProduct == 1">
+                      <input type="checkbox" *ngIf="links.sendProduct == 2">
+                      <span class="custom-toggle-slider rounded-circle"></span>
+                    </label>
+                  </td>
+                  <td width="10%">
+                    <span class="badge badge-dot mr-4">
+                      <i class="{{(links.state === 1) ? 'bg-warning' : 'bg-success'}} "> </i>
+                      <span class="status"> {{(links.state === 1) ? 'Sin cotizar' : 'Cotizado'}} </span>
+                    </span>
+                  </td>
+                  <td width="10%" *ngIf="links.state == 1">
+                    <a [routerLink]="['/create-quotation', links.code]" class="btn btn-success btn-sm">Cotizar</a>
+                  </td>
+                  <td width="10%" *ngIf="links.state == 2">
+                    <a [routerLink]="['/update-quotation', links.code]" class="btn btn-success btn-sm">Editar</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #addLinkQuotation let-c="close" let-d="dismiss">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title-default">Agregar nuevo link</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="newLink" (ngSubmit)="addNewLink($event)">
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <label>Link</label>
+            <input type="text" formControlName="link" class="form-control">
+          </div>
+
+          <div class="col-md-12 form-group">
+            <label>Comentario</label>
+            <textarea cols="30" rows="2" formControlName="commentary" class="form-control"></textarea>
+          </div>
+
+        </div>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="errorState">
+          <span class="alert-inner--text">{{message.error}}</span>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <button type="submit" class="btn btn-info">Guardar</button>
+        <button type="button" class="btn btn-danger" (click)="getDismissReason('Close click')">
+          Cancelar
+        </button>
+      </form>
+    </div>
+    <div class="modal-footer">
+
+    </div>
+  </div>
+</ng-template>

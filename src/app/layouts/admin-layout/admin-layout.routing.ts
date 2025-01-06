@@ -1,15 +1,68 @@
-import { Routes } from '@angular/router';
+import { Routes } from "@angular/router";
 
-import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
-import { IconsComponent } from '../../pages/icons/icons.component';
-import { MapsComponent } from '../../pages/maps/maps.component';
-import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
-import { TablesComponent } from '../../pages/tables/tables.component';
+import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
+import { DashboardAdminComponent } from './../../pages/dashboard-admin/dashboard-admin.component';
+import { UserProfileComponent } from "../../pages/user-profile/user-profile.component";
+// import { TablesComponent } from "../../pages/tables/tables.component";
+import { ListQuotationComponent } from "../../pages/quotation/list-quotation/list-quotation.component";
+import { ProviderComponent } from "../../pages/provider/provider/provider.component";
+import { TariffComponent } from "../../pages/tariff/tariff.component";
+import { ProductComponent } from "../../pages/product/product.component";
+import { SettingComponent } from "../../pages/setting/setting.component";
+import { CreateQuotationComponent } from "../../pages/quotation/create-quotation/create-quotation.component";
+import { UpdateQuotationComponent } from "../../pages/quotation/update-quotation/update-quotation.component";
+import { ViewQuotationComponent } from "../../pages/quotation/view-quotation/view-quotation.component";
+import { NewProviderComponent } from "../../pages/provider/new-provider/new-provider.component";
+import { UpdateProviderComponent } from "../../pages/provider/update-provider/update-provider.component";
+import { RequestQuotationComponent } from "../../pages/request-quotation/request-quotation.component";
+import { ListUsersComponent } from '../../pages/user/users/list-users/list-users.component';
+import { CreateUsersComponent } from '../../pages/user/users/create-users/create-users.component';
+import { UpdateUsersComponent } from '../../pages/user/users/update-users/update-users.component';
+import { ListTypeUserComponent } from '../../pages/user/type-user/list-type-user/list-type-user.component';
+import { DiscountComponent } from '../../pages/discount/discount.component';
+import { QuotationComponent } from '../../pdf/quotation/quotation.component';
+import { QuoteAssignmentComponent } from '../../pages/quote-assignment/quote-assignment.component';
+import { ListSaleComponent } from '../../pages/sale/list-sale/list-sale.component';
+import { CreateSaleComponent } from './../../pages/sale/create-sale/create-sale.component';
+import { PrincipalOrdersComponent } from './../../pages/orders/principal-orders/principal-orders.component';
+import { ListOrdersComponent } from './../../pages/orders/list-orders/list-orders.component';
+import { CreateOrderComponent } from './../../pages/orders/create-order/create-order.component';
+import { CompanyComponent } from './../../pages/company/company.component';
+import { CommissionComponent } from './../../pages/commission/commission.component';
+import { ForDeliveryComponent } from 'src/app/pages/orders/for-delivery/for-delivery.component';
+import { DeliveredComponent } from "src/app/pages/orders/delivered/delivered.component";
+import { ReportComponent } from "src/app/pages/report/report.component";
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',      component: DashboardComponent },
-    { path: 'user-profile',   component: UserProfileComponent },
-    { path: 'tables',         component: TablesComponent },
-    { path: 'icons',          component: IconsComponent },
-    { path: 'maps',           component: MapsComponent }
+    { path: "dashboard", component: DashboardComponent },
+    { path: "dashboard-admin", component: DashboardAdminComponent },
+    { path: "user-profile", component: UserProfileComponent },
+    { path: "quotation", component: ListQuotationComponent },
+    { path: "provider", component: ProviderComponent },
+    { path: "tariff", component: TariffComponent },
+    { path: "product", component: ProductComponent },
+    { path: "setting", component: SettingComponent },
+    { path: "create-quotation/:code/:client", component: CreateQuotationComponent },
+    { path: "update-quotation/:code/:client", component: UpdateQuotationComponent },
+    { path: "view-quotation/:code", component: ViewQuotationComponent },
+    { path: "new-provider", component: NewProviderComponent },
+    { path: "edit-provider/:code", component: UpdateProviderComponent },
+    { path: "request-quotation", component: RequestQuotationComponent },
+    { path: "list-users", component: ListUsersComponent },
+    { path: "creating-users", component: CreateUsersComponent },
+    { path: "updating-users/:code", component: UpdateUsersComponent },
+    { path: "list-type-users", component: ListTypeUserComponent },
+    { path: "discount", component: DiscountComponent },
+    { path: "pdf/:code", component: QuotationComponent },
+    { path: "quote-assignment", component: QuoteAssignmentComponent },
+    { path: "list-sales", component: ListSaleComponent },
+    { path: "create-sale", component: CreateSaleComponent },
+    { path: "orders", component: PrincipalOrdersComponent },
+    { path: "list-orders", component: ListOrdersComponent },
+    { path: "create-order/:code", component: CreateOrderComponent },
+    { path: "companies", component: CompanyComponent },
+    { path: "commissions", component: CommissionComponent },
+    { path: "for-delivery", component: ForDeliveryComponent },
+    { path: "delivered", component: DeliveredComponent },
+    { path: "reports", component: ReportComponent }
 ];

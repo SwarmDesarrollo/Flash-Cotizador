@@ -1,0 +1,102 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <form novalidate [formGroup]="createProvider" (ngSubmit)="createNewProvider($event)">
+            <h6 class="heading-small text-muted mb-4">Nuevo proveedor</h6>
+            <hr>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="">Nombre</label>
+                <input type="text" class="form-control" formControlName="name" required />
+                <div *ngIf="createProvider.get('name').errors &&createProvider.get('name').touched">
+                  <p *ngIf="createProvider.get('name').hasError('required')">
+                    * Es un campo requerido
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 form-group">
+                <label for="">Costo por libra</label>
+                <input type="number" class="form-control" formControlName="priceWeight" required />
+                <div *ngIf="createProvider.get('priceWeight').errors &&createProvider.get('priceWeight').touched">
+                  <p *ngIf="createProvider.get('priceWeight').hasError('required')">
+                    * Es un campo requerido
+                  </p>
+                  <p *ngIf="createProvider.get('priceWeight').hasError('min')">
+                    * Debe de ingresar una cantidad igual o mayor a 0.
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label for="">Peso limite</label>
+                <input type="number" class="form-control" formControlName="weightLimit" />
+                <div *ngIf="createProvider.get('weightLimit').errors &&createProvider.get('weightLimit').touched">
+                  <p *ngIf="createProvider.get('weightLimit').hasError('required')">
+                    * Es un campo requerido
+                  </p>
+                  <p *ngIf="createProvider.get('weightLimit').hasError('min')">
+                    * Debe de ingresar una cantidad igual o mayor a 0.
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label for="">Seguro</label>
+                <input type="number" class="form-control" formControlName="safe" placeholder="Porcentaje de seguro" />
+                <div *ngIf="createProvider.get('safe').errors &&createProvider.get('safe').touched">
+                  <p *ngIf="createProvider.get('safe').hasError('required')">
+                    * Es un campo requerido
+                  </p>
+                  <p *ngIf="createProvider.get('safe').hasError('min') ||  createProvider.get('safe').hasError('max')">
+                    * Debe de ingresar un porcentaje igual o mayor a 0 y menor a 100.
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label for="">Desaduanaje</label>
+                <input type="number" class="form-control" formControlName="customClearence" />
+                <div
+                  *ngIf="createProvider.get('customClearence').errors &&createProvider.get('customClearence').touched">
+                  <p *ngIf="createProvider.get('customClearence').hasError('required')">
+                    * Es un campo requerido
+                  </p>
+                  <p *ngIf="createProvider.get('customClearence').hasError('min')">
+                    * Debe de ingresar una cantidad igual o mayor a 0.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 " *ngIf="errorValid">
+                <div class="alert alert-warning">
+                  {{message.error}}
+                </div>
+              </div>
+              <div class="col-md-12">
+                <button class="btn btn-md btn-info" type="submit">
+                  Guardar
+                </button>
+                <button (click)="backClicked()" class="btn btn-md btn-danger">
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

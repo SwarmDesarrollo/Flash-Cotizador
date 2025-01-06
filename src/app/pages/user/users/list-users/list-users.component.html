@@ -1,0 +1,60 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <h6 class="heading-small text-muted mb-4">Listado de usuarios</h6>
+          <hr>
+          <div class="row">
+            <div class="col-12 text-right">
+              <a class="btn btn-md btn-success btn-round btn-icon" [routerLink]="['/creating-users']">
+                <span class="btn-inner--icon">
+                  <i class="fas fa-user-edit"> </i>
+                </span>
+                <span class="btn-inner--text"> Nuevo usuario </span>
+              </a>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="table-responsive">
+              <table id="users"
+                class="table align-items-center table-flush row-border hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th width="10%">#</th>
+                    <th width="70%">Nombre</th>
+                    <th width="70%">Estado</th>
+                    <th width="20%">
+                      acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr *ngFor="let user of iUser; index as i">
+                    <th width="10%">{{ i + 1 }}</th>
+                    <th width="70%">{{ user.name }}</th>
+                    <th width="70%"> <span
+                        class="{{(user.state == 1) ? 'badge badge-success' : 'badge badge-danger'}} ">{{(user.state == 1) ? 'ACTIVO' : 'INACTIVO'}}</span>
+                    </th>
+                    <th width="20%">
+                      <button class="btn btn-success btn-sm"
+                        [routerLink]="['/updating-users', user.code]">Actualizar</button>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+#quotation-pdf {
+  width: 750px;
+  height: 792px;
+}
+
+.header {
+  height: 150px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-family: helvetica;
+  font-size: 15px;
+}
+
+.table-body {
+  width: 100%;
+  font-family: helvetica;
+  font-size: 15px;
+}
+
+.table-header {
+  width: 100%;
+  font-family: helvetica;
+  font-size: 15px;
+}
+
+.table-quotation thead {
+  background-color: black;
+  color: white;
+  font-family: helvetica;
+  font-size: 15px;
+}
+
+.table-quotation tr:nth-child(even) {
+  background-color: #81DAF5;
+}
+
+.body-quotation {
+  margin-top: 10px;
+  font-family: helvetica;
+  font-size: 15px;
+}
+
+
+.table-body thead tr th {
+  text-align: center;
+}
+
+.table-body tbody tr td {
+  text-align: center;
+}

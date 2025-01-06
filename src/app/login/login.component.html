@@ -1,0 +1,78 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-danger opacity-8"></span>
+  <div class="container">
+    <div class="header-body text-center mb-7">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-6">
+          <h1 class="text-white">Bienvenido!</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="separator separator-bottom separator-skew zindex-100">
+    <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+    </svg>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container mt--8 pb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7">
+      <div class="card bg-secondary shadow border-0">
+        <div class="card-header bg-transparent pb-5">
+          <div class="btn-wrapper text-center"></div>
+          <div class="card-body px-lg-5 py-lg-5">
+            <form novalidate [formGroup]="login" (ngSubmit)="signin($event)">
+              <div class="form-group mb-3">
+                <div class="input-group input-group-alternative">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="ni ni-single-02"></i></span>
+                  </div>
+                  <input class="form-control" formControlName="username" placeholder="usuario" required type="text" />
+                </div>
+                <div *ngIf="
+                    login.get('username').errors &&
+                    login.get('username').touched
+                  ">
+                  <p *ngIf="login.get('username').hasError('required')">
+                    * Es un campo requerido
+                  </p>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group input-group-alternative">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                  </div>
+                  <input class="form-control" formControlName="password" placeholder="Password" required
+                    type="password" />
+                </div>
+                <div *ngIf="
+                    login.get('password').errors &&
+                    login.get('password').touched
+                  ">
+                  <p *ngIf="login.get('password').hasError('required')">
+                    * Es un campo requerido
+                  </p>
+                </div>
+              </div>
+              <p class="danger" *ngIf="errorLogin">
+                {{ message.error }}
+              </p>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary my-4">
+                  Ingresar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

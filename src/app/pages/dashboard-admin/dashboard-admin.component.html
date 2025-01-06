@@ -1,0 +1,190 @@
+<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8 mb-2">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row">
+        <div class="col-xl-4 col-md-4 mb-2 mb-xl-0">
+          <div class="card bg-gradient-default">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0 text-white">Total Venta</h5>
+                  <span class="h2 font-weight-bold mb-0 text-white">{{ totalMontoVenta | currency:' ':'Q. ' }}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
+                    <i class="fa fa-money-bill"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-sm">
+                <span class="text-white mr-2"> {{ meses[mesSelected] }}</span>
+                <span class="text-nowrap text-light">- {{ anioSelected}} </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-8 col-md-8 mb-md-5 mb-sm-0">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">Estadísticas de Vendedores</h3>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr class="text-center">
+                    <th scope="col">Vendedor</th>
+                    <th scope="col">Monto de ventas</th>
+                    <th scope="col"># Cotizaciones</th>
+                    <th scope="col">Cot. Totales</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor='let item of salesStadistics'>
+                    <td scope="col">{{item.name}}</td>
+                    <td scope="col" class="text-center">{{ item.amountTotal | currency:' ':'Q. ' }}</td>
+                    <td scope="col" class="text-center">{{ item.cantCotizaciones }}</td>
+                    <td scope="col" class="text-center">{{ item.cantCotizacionesTotal }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--8 mb-2">
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="searchFormData">
+        <div class="row">
+          <div class="col-xl-4 mb-3 mb-xl-0">
+            <select class="form-control" formControlName="anioVenta">
+              <option value="">SELECCIONAR AÑO</option>
+              <option *ngFor="let anio of anios; index as i;" value="{{ anio }}">{{ anio }}</option>
+            </select>
+          </div>
+  
+          <div class="col-xl-4 mb-3 mb-xl-0">
+            <select class="form-control" formControlName="mesVenta">
+              <option value="">SELECCIONAR MES</option>
+              <option *ngFor="let mes of meses; index as i;" value="{{ i + 1 }}">{{ mes }}</option>
+            </select>
+          </div>
+
+          <div class="col-xl-4 mb-3 mb-xl-0">
+            <div class="row">
+              <div class="col-6 col-sm-6">
+                <button type="button" class="col-sm-12 btn btn-info" [disabled]="!searchFormData.valid" (click)="getSales(searchFormData.value)">
+                  <i class="fas fa-search"></i> Filtrar
+                </button>
+              </div>
+              <div class="col-6 col-sm-6">
+                <button type="button" class="col-sm-12 btn btn-success" (click)="exportToExcel()">
+                  <i class="fas fa-print"></i> Reporte
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-3">
+  <div class="row">
+    <div class="col-xl-4 col-lg-6">
+      <a [routerLink]="['/quotation']" [queryParams]="{status: 'Aceptada'}">
+        <div class="card card-stats bg-gradient-default mb-4 mb-xl-0">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title text-uppercase text-white text-muted mb-0">Cotizaciones Aceptadas</h5>
+                <span class="h2 font-weight-bold text-white mb-0">{{quotationPendingAceptadas}}</span>
+              </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-success text-white rounded-circle shadow">
+                  <i class="fas fa-check"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-xl-4 col-lg-6">
+      <div class="card card-stats bg-gradient-default mb-4 mb-xl-0">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h5 class="card-title text-uppercase text-muted text-white mb-0">Órdenes Entregados</h5>
+              <span class="h2 font-weight-bold text-white mb-0">{{orderDelivered}}</span>
+            </div>
+            <div class="col-auto">
+              <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                <i class="ni ni-satisfied"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6">
+      <div class="card card-stats bg-gradient-default mb-4 mb-xl-0">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h5 class="card-title text-uppercase text-muted text-white mb-0">Órdenes Validados</h5>
+              <span class="h2 font-weight-bold text-white mb-0">{{orderValidated}}</span>
+            </div>
+            <div class="col-auto">
+              <div class="icon icon-shape bg-success text-white rounded-circle shadow">
+                <i class="fas fa-check"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid mt-3 mb-2">
+  <div class="row">
+    <div class="col-xl-6 mb-xl-0">
+      <div class="card">
+        <div class="card-body">
+          <div id="grafico1" class="chart">
+            <!-- Chart wrapper -->
+            <canvas id="chart-total" class="chart-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6 mb-xl-0">
+      <div class="card">
+        <div class="card-body">
+          <div id="grafico2" class="chart">
+  
+            <canvas id="chart-montos" class="chart-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

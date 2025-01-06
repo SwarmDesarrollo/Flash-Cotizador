@@ -1,0 +1,47 @@
+<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+      
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--7 mb-2">
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="searchFormData">
+        <div class="row">
+          <div class="col-xl-4 mb-3 mb-xl-0">
+            <select class="form-control" formControlName="anioVenta">
+              <option value="">SELECCIONAR AÑO</option>
+              <option *ngFor="let anio of anios; index as i;" value="{{ anio }}">{{ anio }}</option>
+            </select>
+          </div>
+  
+          <div class="col-xl-4 mb-3 mb-xl-0">
+            <select class="form-control" formControlName="mesVenta">
+              <option value="">SELECCIONAR MES</option>
+              <option *ngFor="let mes of meses; index as i;" value="{{ i + 1 }}">{{ mes }}</option>
+            </select>
+          </div>
+
+          <div class="col-xl-4 mb-3 mb-xl-0">
+            <div class="row">
+              <div class="col-6 col-sm-6">
+                <button type="button" class="col-sm-12 btn btn-info" [disabled]="!searchFormData.valid" > <!-- (click)="getSales(searchFormData.value)" -->
+                  <i class="fas fa-search"></i> Filtrar
+                </button>
+              </div>
+              <div class="col-6 col-sm-6">
+                <!-- <button type="button" class="col-sm-12 btn btn-success" (click)="exportToExcel()">
+                  <i class="fas fa-print"></i> Reporte
+                </button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <form [formGroup]="fUsers" (ngSubmit)="postUsers($event)">
+            <h6 class="heading-small text-muted mb-4">Nuevo usuario</h6>
+            <hr>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="">* Nombre completo</label>
+                <input type="text" class="form-control" formControlName="name" required>
+                <div *ngIf="fUsers.get('name').errors && (fUsers.get('name').dirty || fUsers.get('name').touched)">
+                  <p *ngIf="fUsers.get('name').hasError('required')">
+                    * Es un campo requerido..
+                  </p>
+                </div>
+
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="">* Dirección</label>
+                <input type="text" class="form-control" formControlName="direction">
+                <div *ngIf="fUsers.get('direction').errors && fUsers.get('direction').touched">
+                  <p *ngIf="fUsers.get('direction').hasError('required')">
+                    * Es un campo requerido..
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="">* Numero telefonico</label>
+                <input type="number" class="form-control" formControlName="phone">
+                <div *ngIf="fUsers.get('phone').errors && fUsers.get('phone').touched">
+                  <p *ngIf="fUsers.get('phone').hasError('required')">
+                    * Es un campo requerido...
+                  </p>
+
+                </div>
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="">* Correo electronico</label>
+                <input type="email" placeholder="example@example.com" class="form-control" formControlName="email">
+                <div *ngIf="fUsers.get('email').errors &&fUsers.get('email').touched">
+                  <p *ngIf="fUsers.get('email').hasError('required')">
+                    * Es un campo requerido...
+                  </p>
+                  <p *ngIf="fUsers.get('email').hasError('email')">
+                    * Debe de ingresar un correo valido...
+                  </p>
+                </div>
+              </div>
+
+
+              <div class="col-md-6 form-group">
+                <label for="">* Nombre de usuario</label>
+                <input type="text" class="form-control" formControlName="username">
+                <div *ngIf="fUsers.get('username').errors && fUsers.get('username').touched">
+                  <p *ngIf="fUsers.get('username').hasError('required')">
+                    * Es un campo requerido..
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="">* Contraseña</label>
+                <input type="password" placeholder="temporal123" class="form-control" formControlName="password">
+                <div *ngIf="fUsers.get('password').errors && fUsers.get('password').touched">
+                  <p *ngIf="fUsers.get('password').hasError('required')">
+                    * Es un campo requerido..
+                  </p>
+                </div>
+              </div>
+
+
+              <div class="col-md-6 form-group">
+                <label for="">* Tipo de usuario</label>
+                <select class="form-control" formControlName="codeTypeUser">
+                  <option value="">SELECCIONAR</option>
+                  <option *ngFor="let typeUser of typeUser" value="{{typeUser.code}}">{{typeUser.name}}</option>
+                </select>
+                <div *ngIf="fUsers.get('codeTypeUser').errors && fUsers.get('codeTypeUser').touched">
+                  <p *ngIf="fUsers.get('codeTypeUser').hasError('required')">
+                    * Es un campo requerido..
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <button class="btn btn-success" type="submit">Guardar</button>
+                <button class="btn btn-danger" (click)="thisBack()">Cancelar</button>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

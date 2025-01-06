@@ -1,0 +1,29 @@
+export interface OrderI {
+  code: number;
+  codeUser: number;
+  nameUser: string;
+  userNameUser: string;
+  state: number;
+  monto: number;
+  urlPdf: string,
+  total: string;
+  countTotal: number;
+  firstPay: string;
+  urlFirstPay: string;
+  secondPay: string;
+  urlSecondPay?: string;
+  codeClient: number;
+  nameClient: string;
+  tipo_cliente: number;
+  codeCompany: number;
+  nameCompany: string;
+  urlLetter?: string;
+  urlPayOnline: string;
+  commentary: string;
+  cost: string;
+  noCuotas: number;
+  urlPayOne: string;
+  urlPayTwo?: string;
+  createdAt: Date;
+  user: Object
+}

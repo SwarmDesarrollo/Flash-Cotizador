@@ -1,0 +1,247 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 20%;
+    background-size: cover;
+    background-position: center top;
+  ">
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+          <form [formGroup]="updateLink" (ngSubmit)="updateLinks($event)">
+            <div class="row">
+              <br>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Link producto (<a href="{{updateLink.value.link}}" target="_blanck">Visualizar</a>)</label>
+                  <input type="text" class="form-control is-valid" formControlName="link" />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Comentario</label>
+                  <input type="text" class="form-control is-valid" formControlName="commentary" />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-success">Actualizar</button>
+              </div>
+            </div>
+            <hr>
+          </form>
+
+          <form [formGroup]="createQuotation" (ngSubmit)="createNewQuotation($event)">
+
+            <div class="row">
+
+              <div class="col-md-6 form-groupv">
+                <label>* Nombre producto</label>
+                <input type="text" class="form-control is-valid" formControlName="name" />
+              </div>
+
+              <div class="col-md-6 form-groupv">
+                <label>* Descripción</label>
+                <input type="text" class="form-control is-valid" formControlName="description" />
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label>* Precio (en dolares)</label>
+                <input type="number" class="form-control is-valid" formControlName="price" />
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label>* Cantidad</label>
+                <input type="number" class="form-control is-valid" formControlName="quantity" />
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label>* Shipping</label>
+                <input type="number" class="form-control is-valid" formControlName="shipping" />
+              </div>
+
+              <div class="col-md-4 form-group" *ngIf="createQuotation.value.price >= 1000">
+                <label>* Valor de poliza (en dolares)</label>
+                <input type="text" class="form-control is-valid" formControlName="individualPoliceValue" />
+              </div>
+
+              <div class="col-md-4 form-group" *ngIf="createQuotation.value.price >= 1000">
+                <label>* Pago de impuestos</label>
+                <select class="form-control is-valid" formControlName="taxPayment">
+                  <option value="">SELECCCIONAR</option>
+                  <option value="1">SI</option>
+                  <option value="2">NO</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 form-group" *ngIf="createQuotation.value.price >= 1000">
+                <label>* Descripción de recargo uno</label>
+                <input type="text" class="form-control is-valid" formControlName="descriptionOne" [required] />
+              </div>
+              <div class="col-md-4 form-group" *ngIf="createQuotation.value.price >= 1000">
+                <label>* Monto de recargo uno (en $)</label>
+                <input type="number" class="form-control is-valid" formControlName="surchargeOne" [required] placeholder="Monto de dolares" />
+              </div>
+
+              <div class="col-md-4 form-group" *ngIf="createQuotation.value.price >= 1000">
+                <label>* Descripción de recargo dos</label>
+                <input type="text" class="form-control is-valid" formControlName="descriptionTwo" [required] />
+              </div>
+              <div class="col-md-4 form-group" *ngIf="createQuotation.value.price >= 1000">
+                <label>* Monto de recargo dos (en $)</label>
+                <input type="number" class="form-control is-valid" formControlName="surchargeTwo" [required] placeholder="Monto de dolares" />
+              </div>
+
+              <div class="col-md-4">
+                <label>* Seleccionar fotogafia</label>
+                <input type="file" class="form-control is-valid is-valid" formControlName="urlImage"
+                  (change)="onUploadChange($event)">
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">* Categoria</label>
+                <select class="form-control is-valid" formControlName="codeCategory"
+                  (change)="getSubcategoryPerCategory(createQuotation.value.codeCategory)">
+                  <option value="">SELECCIONAR</option>
+                  <option *ngFor="let category of category" value="{{category.code}}">{{category.name}}</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">* Subcategoria</label>
+                <select class="form-control is-valid" formControlName="codeSubcategory"
+                  (change)="getTariff(createQuotation.value.codeSubcategory)">
+                  <option value="">SELECCIONAR</option>
+                  <option *ngFor="let subcategory of subcategory" value="{{subcategory.code}}">{{subcategory.name}}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">* % de arancel</label>
+                <div class="input-group input-group-alternative mb-4">
+                  <input class="form-control" placeholder="% de arancel" type="text" formControlName="tariff" disabled>
+                  <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">* Tipo de peso</label>
+                <select class="form-control is-valid" formControlName="typeWeight">
+                  <option value="">SELECCIONAR</option>
+                  <option value="1">REAL</option>
+                  <option value="2">VOLUMETRICO</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 form-group"
+                *ngIf="createQuotation.value.typeWeight == 1 || createQuotation.value.typeWeight == 2">
+                <label for="">Peso total (de el/los productos en libras)</label>
+                <input type="text" class="form-control is-valid" formControlName="pounds" />
+              </div>
+
+              <div class="col-md-4 form-group" *ngIf="createQuotation.value.typeWeight == 2">
+                <label for="">Alto (en pulgadas)</label>
+                <input type="number" class="form-control is-valid" formControlName="tall" />
+              </div>
+
+              <div class="col-md-4 form-group" *ngIf="createQuotation.value.typeWeight == 2">
+                <label for="">Ancho (en pulgadas) </label>
+                <input type="number" class="form-control is-valid" formControlName="width" />
+              </div>
+
+              <div class="col-md-4 form-group"
+                *ngIf="createQuotation.value.typeWeight == 2 || createQuotation.value.typeWeight == 3">
+                <label for="">Largo (en pulgadas)</label>
+                <input type="number" class="form-control is-valid" formControlName="long" />
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">* Proveedor</label>
+                <select name="" id="" class="form-control is-valid" formControlName="codeProvider">
+                  <option value="">SELECCIONAR</option>
+                  <option *ngFor="let provider of provider" value="{{provider.code}}">{{provider.name}}</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">* Recargo de tarjeta</label>
+                <select name="" id="" class="form-control is-valid" formControlName="cardCharge">
+                  <option value="">SELECIONAR</option>
+                  <option value="1">SI</option>
+                  <option value="2">NO</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">* Aplica descuento</label>
+                <select name="" id="" class="form-control is-valid" formControlName="applyDiscount"
+                  (change)="getAllDiscount(createQuotation.value.applyDiscount)">
+                  <option value="">SELECIONAR</option>
+                  <option value="1">SI</option>
+                  <option value="2">NO</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 form-group" *ngIf="createQuotation.value.applyDiscount == 1">
+                <label for="">Seleccionar descuento</label>
+                <select name="" id="" class="form-control is-valid" formControlName="codeDiscount">
+                  <option value="">SELECIONAR</option>
+                  <option *ngFor="let discount of iDiscount" value="{{discount.code}}">{{discount.name}}</option>
+                </select>
+              </div>
+
+
+
+              <div class="col-md-4 form-group">
+                <label for="">* Lugar de entrega</label>
+                <select name="" id="" class="form-control is-valid" formControlName="placeOfDelivery">
+                  <option value="">SELECCIONAR</option>
+                  <option value="1">AGENCIA</option>
+                  <option value="2">ENVIO A DOMICILIO</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">* Agregar TAX</label>
+                <select name="" id="" class="form-control is-valid" formControlName="tax">
+                  <option value="">SELECCIONAR</option>
+                  <option value="1">SI</option>
+                  <option value="2">NO</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">* Seleccione el tipo de tiempo</label>
+                <select name="" id="" class="form-control is-valid" formControlName="deliveryGuy">
+                  <option value="">SELECCIONAR</option>
+                  <option value="1">DIA</option>
+                  <option value="2">SEMANA</option>
+                  <option value="3">MES</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label for="">* Ingrese el tiempo de entrega </label>
+                <input type="number" class="form-control is-valid" formControlName="deliveryTime">
+              </div>
+
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-info pull-right">
+                  Guardar
+                </button>
+                <button type="button" class="btn btn-danger pull-right" (click)="backClicked()">
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
